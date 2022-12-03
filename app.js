@@ -124,15 +124,15 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
 // Delete Scheduled Transaction
 
-app.post("/v1/delTransactions",  async (req, res) => {
-
-	const {TransactionID} = req.body;
+app.post("/v1/delTransactions/:TransactionID",  async (req, res) => {
+    console.log(req.params)
+	const {TransactionID} = req.params;
   
    scheduledTransactions.findOneAndDelete({ TransactionID: TransactionID}, (err, result) => {
 	if (err) {
 	  res.status(400).send({ message: "Error: Transaction already exists", error: err });
 	} else {
-	  res.status(200).send({ message: "Transaction created successfully", data: "" });
+	  res.status(200).send({ message: "Transaction deleted successfully", data: "" });
 	}
   });
 });
