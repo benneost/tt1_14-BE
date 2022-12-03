@@ -72,7 +72,7 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 // // User
 
 // // BankAccount
-app.get("/v1/getBankAccount" , async (req, res) => {
+app.get("/v1/getAllBankAccounts" , async (req, res) => {
 	try {
 		const bankaccounts = await bankAccount.find();
 		// console.log(bankaccounts);
@@ -92,4 +92,5 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 		res.status(400).send({ message: "Error has occurred", error: err });
 	}
 });
+
 module.exports = app;
