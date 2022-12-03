@@ -7,4 +7,4 @@ const BankAccountSchema = new mongoose.Schema({
     AcccountBalance: String,
 })
 
-module.exports = mongoose.model('bankaccount', BankAccountSchema);
+module.exports = mongoose.model('BankAccount', BankAccountSchema);

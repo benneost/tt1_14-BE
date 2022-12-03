@@ -11,4 +11,4 @@ const userSchema = new mongoose.Schema({
     OptIntoPhyStatements: String
 })
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);
