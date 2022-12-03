@@ -35,8 +35,8 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 // app.post("/v1/addAccount",  async (req, res) => {
 // 	const { accountid, password, email, role } = req.body;
 // 	const hashedPassword = await bcrypt.hash(password, 10);
-	
-	
+
+
 
 // 	const newAccount = new account({
 // 		_id: accountid,
@@ -46,7 +46,7 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 // 		role,
 // 		token: token,
 // 	});
-	
+
 
 // 	newAccount.save((err, result) => {
 // 		if (err) {
@@ -59,7 +59,7 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 
 // app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
 // 	const { accountid } = req.body;
-	
+
 // 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
 // 		if (result) {
 // 			res.status(200).send({ message: "Account deleted successfully" });
@@ -71,7 +71,7 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 
 
 // Users
-app.get("/v1/getAllUsers" , async (req, res) => {
+app.get("/v1/getAllUsers", async (req, res) => {
 	try {
 		const user = await users.find();
 		// console.log(user);
@@ -84,12 +84,12 @@ app.get("/v1/getAllUsers" , async (req, res) => {
 
 // BankAccounts
 // // BankAccount
-app.post("/v1/addBankAccount",  async (req, res) => {
+app.post("/v1/addBankAccount", async (req, res) => {
 
 	var AccountID = Math.floor(Math.random() * 1000000000);
 
 	// const { AccountID, UserID, AccountType, AcccountBalance } = req.body;
-	
+
 	const newBankAccount = new bankAccount({
 		AccountID: AccountID,
 		UserID: req.body.UserID,
@@ -108,7 +108,7 @@ app.post("/v1/addBankAccount",  async (req, res) => {
 	});
 });
 
-app.get("/v1/getAllBankAccounts" , async (req, res) => {
+app.get("/v1/getAllBankAccounts", async (req, res) => {
 	try {
 		const bankaccounts = await bankAccount.find();
 		// console.log(bankaccounts);
@@ -119,7 +119,7 @@ app.get("/v1/getAllBankAccounts" , async (req, res) => {
 });
 
 
-app.get("/v1/getBankAccountsByUserId/:id" , async (req, res) => {
+app.get("/v1/getBankAccountsByUserId/:id", async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
 		res.status(200).json(bankaccounts);
@@ -130,7 +130,7 @@ app.get("/v1/getBankAccountsByUserId/:id" , async (req, res) => {
 
 
 // ScheduledTransactions
-app.get("/v1/getAllTransactions" , async (req, res) => {
+app.get("/v1/getAllTransactions", async (req, res) => {
 	try {
 		const transactions = await scheduledTransactions.find();
 		// console.log(transactions);
@@ -140,15 +140,15 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 	}
 });
 
-app.get("/v1/getTransactionsByUserId/:id" , async (req, res) => {
+app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
 		console.log(bankaccounts);
 		const result = []
 
-		
+
 		for (let i = 0; i < bankaccounts.length; i++) {
-			const temp = {BankAccount: bankaccounts[i].AccountID}
+			const temp = { BankAccount: bankaccounts[i].AccountID }
 			const transactions = await getTransactionsByAccountId(bankaccounts[i].AccountID);
 			temp.Transactions = transactions;
 			result.push(temp);
@@ -160,19 +160,28 @@ app.get("/v1/getTransactionsByUserId/:id" , async (req, res) => {
 	}
 });
 
-async function getBankAccountsByUserId(userId){
+app.get("/v1/getTransactionsByAccountId/:id", async (req, res) => {
+	try {
+		const transactions = await getTransactionsByAccountId(req.params.id);
+		res.status(200).json(transactions);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
+async function getBankAccountsByUserId(userId) {
 	try {
 		// console.log(userId);
-		return await bankAccount.find({"UserID":`${userId}`});
+		return await bankAccount.find({ "UserID": `${userId}` });
 	} catch (err) {
 		throw new Exception({ message: "Error has occurred", error: err });
 	}
 }
 
-async function getTransactionsByAccountId(accountId){
+async function getTransactionsByAccountId(accountId) {
 	try {
 		// console.log(accountId);
-		return await scheduledTransactions.find({ $or: [ { AccountID: accountId }, { ReceivingAccountID: accountId } ] });
+		return await scheduledTransactions.find({ $or: [{ AccountID: accountId }, { ReceivingAccountID: accountId }] });
 	} catch (err) {
 		throw new Exception({ message: "Error has occurred", error: err });
 	}
