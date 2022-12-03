@@ -1,96 +1,96 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-    
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Deploy in EC2
-        env:
-            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
-            HOSTNAME : ${{ secrets.HOSTNAME  }}
-            USER_NAME : ${{ secrets.USER  }}
-            
-        run: |
-          echo "$EC2_PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-          
-            #Now we have got the access of EC2 and we will start the deploy .
-            DIR="/home/ec2-user/server"
-            pm2 delete all
-            cd /home/ec2-user
-            
-            if [ ! -d $DIR ]
-            then
-              mkdir server &&
-              git clone https://github.com/benneost/tt1_14-BE.git server &&
-              cd server &&
-              npm i
-            else
-              cd server
-            fi
-            
-            git checkout main &&
-            git fetch --all &&
-            git reset --hard origin/main &&
-            git pull origin main &&
-            pm2 start server.js
-          '
-            
+# # This is a basic workflow to help you get started with Actions
 
 # name: CI
 
+# # Controls when the workflow will run
 # on:
+#   # Triggers the workflow on push or pull request events but only for the main branch
 #   push:
 #     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
-
+    
+#   # Allows you to run this workflow manually from the Actions tab
 #   workflow_dispatch:
 
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 # jobs:
+#   # This workflow contains a single job called "build"
 #   build:
-
+#     # The type of runner that the job will run on
 #     runs-on: ubuntu-latest
 
-#     if: github.ref == 'refs/heads/main'
-
-#     strategy:
-#       matrix:
-#         node-version: [16.x]
-
+#     # Steps represent a sequence of tasks that will be executed as part of the job
 #     steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
 #       - uses: actions/checkout@v3
 
-#       - run: npm ci
-#       - run: npm run build
-#       - run: npm run test
+#       # Runs a single command using the runners shell
+#       - name: Deploy in EC2
+#         env:
+#             PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
+#             HOSTNAME : ${{ secrets.HOSTNAME  }}
+#             USER_NAME : ${{ secrets.USER  }}
+            
+#         run: |
+#           echo "$EC2_PRIVATE_KEY" > private_key && chmod 600 private_key
+#           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+#             #Now we have got the access of EC2 and we will start the deploy .
+#             DIR="/home/ec2-user/server"
+#             pm2 delete all
+#             cd /home/ec2-user
+            
+#             if [ ! -d $DIR ]
+#             then
+#               mkdir server &&
+#               git clone https://github.com/benneost/tt1_14-BE.git server &&
+#               cd server &&
+#               npm i
+#             else
+#               cd server
+#             fi
+            
+#             git checkout main &&
+#             git fetch --all &&
+#             git reset --hard origin/main &&
+#             git pull origin main &&
+#             pm2 start server.js
+#           '
+            
 
-#       - name: rsync deployments
-#         uses: burnett01/rsync-deployments@5.1
-#         with:
-#           switches: -avzr --delete
-#           path: ./*
-#           remote_path: /var/www/my-app/
-#           remote_host: ip-172-31-32-220.ap-northeast-1.compute.amazonaws.com
-#           remote_user: ubuntu
-#           remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test
+
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: ./*
+          remote_path: /var/www/my-app/
+          remote_host: ip-172-31-32-220.ap-northeast-1.compute.amazonaws.com
+          remote_user: ubuntu
+          remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
