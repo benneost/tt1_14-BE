@@ -32,6 +32,18 @@ app.get("/v1/getAllUser" , async (req, res) => {
 	}
 });
 
+app.get("/v1/getUserByUsername" , async (req, res) => {
+	try {
+		const userData = await user.find(
+			{Username: req.body.Username},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json({ data: userData, error: "Error has occurred" });
+	} catch (err) {
+		res.status(400).send({ data: null, error: "Error has occurred" });
+	}
+});
+
 app.post("/v1/editUser" , async (req, res) => {
 	try {
 		const userData = await user.findOne({ Username: req.body.Username });
