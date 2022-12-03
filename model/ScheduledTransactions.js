@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const scheduledTransactionSchema = new mongoose.Schema({
-    TransactionID: String,
+    TransactionID: Number,
     AccountID: Number,
     ReceivingAccountID: Number,
     Date: Date,
