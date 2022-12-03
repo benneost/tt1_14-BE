@@ -19,44 +19,89 @@ app.use(
 const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
 
-// app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
+app.get("/v1/getUser" , async (req, res) => {
+	try {
+		const userData = await user.find(
+			{},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json(userData);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
 
-// app.post("/v1/addAccount",  async (req, res) => {
-// 	const { accountid, password, email, role } = req.body;
-// 	const hashedPassword = await bcrypt.hash(password, 10);
+app.post("/v1/addUser",  async (req, res) => {
+	const { Username, Password, Firstname, Lastname, Email, Address, OptIntoPhyStatements } = req.body;
+	const hashedPassword = await bcrypt.hash(Password, 10);
+	let Userid = 1;
+	userData = await user.findOne().sort({UserID: -1})
+	if (userData) {
+		Userid = userData.UserID + 1;
+	}
 	
+	const newAccount = new user({
+		UserID: Userid,
+		Username,
+		Password : hashedPassword,
+		Firstname,
+		Lastname,
+		Email,
+		Address,
+		OptIntoPhyStatements
+	});
 	
+	newAccount.save((err, result) => {
+		if (err) {
+			res.status(400).send({ message: "Error: Account already exists", error: err });
+		} else {
+			res.status(200).send({ message: "Account created successfully", data: 'token' });
+		}
+	});
+});
 
-// 	const newAccount = new account({
-// 		_id: accountid,
-// 		accountid,
-// 		password: hashedPassword,
-// 		email,
-// 		role,
-// 		token: token,
-// 	});
+app.post("/v1/login" , async (req, res) => {
+	const userData = await user.findOne({ Username: req.body.Username });
+	// if no user found
 	
+	if (!userData) {
+		res.status(401).send({ message: "User not found" });
+		// if user is admin
+	} else {
+		try {
+			const isPasswordValid = await bcrypt.compare(
+				req.body.Password,
+				userData.Password
+			);
+			console.log( isPasswordValid)
+			if (!isPasswordValid) {
+				res.status(401).send({ message: "Invalid password" });
+			} else {
+				// user.token = jwt.sign(
+				// 	{
+				// 		exp: Math.floor(Date.now() / 1000) + 60 * 60 * 2,
+				// 		userid: req.body.userid,
+				// 	},
+				// 	"7Rs"
+				// );
 
-// 	newAccount.save((err, result) => {
-// 		if (err) {
-// 			res.status(400).send({ message: "Error: Account already exists", error: err });
-// 		} else {
-// 			res.status(200).send({ message: "Account created successfully", data: token });
-// 		}
-// 	});
-// });
+				res.status(200).send({
+					data: {
+						token: "token",
+						// role: userData.role,
+						// token: user.token,
+					},
+					error: null,
+				});
+			}
+		} catch (error) {
+			res.status(500).send({ message: "Error: Error Logging in", error: error });
+		}
+	}
+});
 
-// app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
+
+// app.post("/v1/deleteAccount", async (req, res) => {
 // 	const { accountid } = req.body;
 	
 // 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
@@ -71,13 +116,13 @@ const bankaccount = require("./model/BankAccount");
 // // User
 
 // // BankAccount
-// app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+// app.get("/v1/getBankAccount" , async (req, res) => {
 // 	try {
-// 		const accounts = await account.find(
+// 		const user = await account.find(
 // 			{},
 // 			{ _id: 0, __v: 0, password: 0, token: 0 }
 // 		);
-// 		res.status(200).json(accounts);
+// 		res.status(200).json(user);
 // 	} catch (err) {
 // 		res.status(400).send({ message: "Error has occurred", error: err });
 // 	}
