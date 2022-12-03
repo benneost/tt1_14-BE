@@ -18,7 +18,7 @@ app.use(
 
 const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
-const scheduledtranaction = require("./model/ScheduledTransaction");
+const scheduledtranaction = require("./model/ScheduledTransactions");
 
 // app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 // 	try {
