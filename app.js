@@ -16,70 +16,71 @@ app.use(
 	})
 );
 
-const account = require("./model/User");
+const user = require("./model/User");
+const bankaccount = require("./model/BankAccount");
 
-app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
-	try {
-		const accounts = await account.find(
-			{},
-			{ _id: 0, __v: 0, password: 0, token: 0 }
-		);
-		res.status(200).json(accounts);
-	} catch (err) {
-		res.status(400).send({ message: "Error has occurred", error: err });
-	}
-});
+// app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
+// 	try {
+// 		const accounts = await account.find(
+// 			{},
+// 			{ _id: 0, __v: 0, password: 0, token: 0 }
+// 		);
+// 		res.status(200).json(accounts);
+// 	} catch (err) {
+// 		res.status(400).send({ message: "Error has occurred", error: err });
+// 	}
+// });
 
-app.post("/v1/addAccount",  async (req, res) => {
-	const { accountid, password, email, role } = req.body;
-	const hashedPassword = await bcrypt.hash(password, 10);
+// app.post("/v1/addAccount",  async (req, res) => {
+// 	const { accountid, password, email, role } = req.body;
+// 	const hashedPassword = await bcrypt.hash(password, 10);
 	
 	
 
-	const newAccount = new account({
-		_id: accountid,
-		accountid,
-		password: hashedPassword,
-		email,
-		role,
-		token: token,
-	});
+// 	const newAccount = new account({
+// 		_id: accountid,
+// 		accountid,
+// 		password: hashedPassword,
+// 		email,
+// 		role,
+// 		token: token,
+// 	});
 	
 
-	newAccount.save((err, result) => {
-		if (err) {
-			res.status(400).send({ message: "Error: Account already exists", error: err });
-		} else {
-			res.status(200).send({ message: "Account created successfully", data: token });
-		}
-	});
-});
+// 	newAccount.save((err, result) => {
+// 		if (err) {
+// 			res.status(400).send({ message: "Error: Account already exists", error: err });
+// 		} else {
+// 			res.status(200).send({ message: "Account created successfully", data: token });
+// 		}
+// 	});
+// });
 
-app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
-	const { accountid } = req.body;
+// app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
+// 	const { accountid } = req.body;
 	
-	account.findOneAndDelete({ _id: accountid }, (err, result) => {
-		if (result) {
-			res.status(200).send({ message: "Account deleted successfully" });
-		} else {
-			res.status(400).send({ message: "Error: Account does not exist", error: err });
-		}
-	});
-});
+// 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
+// 		if (result) {
+// 			res.status(200).send({ message: "Account deleted successfully" });
+// 		} else {
+// 			res.status(400).send({ message: "Error: Account does not exist", error: err });
+// 		}
+// 	});
+// });
 
-// User
+// // User
 
-// BankAccount
-app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
-	try {
-		const accounts = await account.find(
-			{},
-			{ _id: 0, __v: 0, password: 0, token: 0 }
-		);
-		res.status(200).json(accounts);
-	} catch (err) {
-		res.status(400).send({ message: "Error has occurred", error: err });
-	}
-});
+// // BankAccount
+// app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+// 	try {
+// 		const accounts = await account.find(
+// 			{},
+// 			{ _id: 0, __v: 0, password: 0, token: 0 }
+// 		);
+// 		res.status(200).json(accounts);
+// 	} catch (err) {
+// 		res.status(400).send({ message: "Error has occurred", error: err });
+// 	}
+// });
 // ScheduledTransactions
 module.exports = app;
