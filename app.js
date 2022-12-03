@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const users = require("./model/User");
+const user = require("./model/User");
 const bankAccount = require("./model/BankAccount");
 const scheduledTransactions = require("./model/ScheduledTransactions");
 
@@ -26,19 +26,19 @@ app.get("/v1/getAllUser" , async (req, res) => {
 			{},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
-		res.status(200).json({ data: userData, error: "Error has occurred" });
+		res.status(200).json({ data: userData, error: "" });
 	} catch (err) {
 		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
 });
 
-app.get("/v1/getUserByUsername" , async (req, res) => {
+app.post("/v1/getUserByUsername" , async (req, res) => {
 	try {
 		const userData = await user.find(
 			{Username: req.body.Username},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
-		res.status(200).json({ data: userData, error: "Error has occurred" });
+		res.status(200).json({ data: userData, error: "" });
 	} catch (err) {
 		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
@@ -91,12 +91,12 @@ app.post("/v1/addUser",  async (req, res) => {
 	});
 });
 
-app.post("/v1/login" , async (req, res) => {
+app.post("/v1/login", async (req, res) => {
 	const userData = await user.findOne({ Username: req.body.Username });
 	// if no user found
 	
 	if (!userData) {
-		res.status(401).send({ message: "User not found" });
+		res.status(400).send({data:null, error: "User not found" });
 		// if user is admin
 	} else {
 		try {
@@ -106,7 +106,7 @@ app.post("/v1/login" , async (req, res) => {
 			);
 			console.log( isPasswordValid)
 			if (!isPasswordValid) {
-				res.status(401).send({ message: "Invalid password" });
+				res.status(400).send({data:null,  error: "Invalid password" });
 			} else {
 				// user.token = jwt.sign(
 				// 	{
@@ -135,23 +135,25 @@ app.post("/v1/login" , async (req, res) => {
 				});
 			}
 		} catch (error) {
-			res.status(500).send({ message: "Error: Error Logging in", error: error });
+			res.status(500).send({ data: null , error: "Error Logging in" });
 		}
 	}
 });
 
 
-// app.post("/v1/deleteAccount", async (req, res) => {
-// 	const { accountid } = req.body;
+ app.post("/v1/deleteAccount/:UserID", async (req, res) => {
+    console.log(req.params)
+ 	const { UserID } = req.params;
+	
+ 	user.findOneAndDelete({ UserID: UserID}, (err, result) => {
+ 		if (result) {
+ 			res.status(200).send({ message: "Account deleted successfully" });
+ 		} else {
+ 			res.status(400).send({ message: "Error: Account does not exist", error: err });
+ 		}
+ 	});
+ });
 
-// 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
-// 		if (result) {
-// 			res.status(200).send({ message: "Account deleted successfully" });
-// 		} else {
-// 			res.status(400).send({ message: "Error: Account does not exist", error: err });
-// 		}
-// 	});
-// });
 
 
 // Users
@@ -180,7 +182,7 @@ app.post("/v1/addBankAccount", async (req, res) => {
 		AcccountBalance: req.body.AcccountBalance
 	});
 
-	console.log(newBankAccount);
+	// console.log(newBankAccount);
 
 	newBankAccount.save((err, result) => {
 		if (err) {
@@ -226,7 +228,7 @@ app.get("/v1/getAllTransactions", async (req, res) => {
 app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
-		console.log(bankaccounts);
+		// console.log(bankaccounts);
 		const result = []
 
 
@@ -236,7 +238,7 @@ app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 			temp.Transactions = transactions;
 			result.push(temp);
 		}
-		console.log(result);
+		// console.log(result);
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).send({ message: "Error has occurred", error: err });
