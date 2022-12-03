@@ -146,9 +146,12 @@ app.get("/v1/getTransactionsByUserId/:id" , async (req, res) => {
 		console.log(bankaccounts);
 		const result = []
 
+		
 		for (let i = 0; i < bankaccounts.length; i++) {
+			const temp = {BankAccount: bankaccounts[i].AccountID}
 			const transactions = await getTransactionsByAccountId(bankaccounts[i].AccountID);
-			result.push(transactions);
+			temp.Transactions = transactions;
+			result.push(temp);
 		}
 		console.log(result);
 		res.status(200).json(result);
