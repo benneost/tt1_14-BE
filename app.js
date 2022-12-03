@@ -95,7 +95,6 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
 
 const deleteTransaction = new scheduledTransactions({
-	TransactionID,
     AccountID,
     ReceivingAccountID,
     Date,
