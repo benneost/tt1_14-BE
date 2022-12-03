@@ -33,19 +33,6 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 // });
 
 
-// Testing Transaction Create
-// app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
-
 // app.post("/v1/addAccount",  async (req, res) => {
 // 	const { accountid, password, email, role } = req.body;
 // 	const hashedPassword = await bcrypt.hash(password, 10);
@@ -97,6 +84,9 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 // 		res.status(400).send({ message: "Error has occurred", error: err });
 // 	}
 // });
+
+
+
 // ScheduledTransactions
 
 
