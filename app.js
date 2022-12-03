@@ -120,17 +120,19 @@ app.post("/v1/login" , async (req, res) => {
 });
 
 
-// app.post("/v1/deleteAccount", async (req, res) => {
-// 	const { accountid } = req.body;
+ app.post("/v1/deleteAccount/:UserID", async (req, res) => {
+    console.log(req.params)
+ 	const { UserID } = req.params;
 	
-// 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
-// 		if (result) {
-// 			res.status(200).send({ message: "Account deleted successfully" });
-// 		} else {
-// 			res.status(400).send({ message: "Error: Account does not exist", error: err });
-// 		}
-// 	});
-// });
+ 	user.findOneAndDelete({ UserID: UserID}, (err, result) => {
+ 		if (result) {
+ 			res.status(200).send({ message: "Account deleted successfully" });
+ 		} else {
+ 			res.status(400).send({ message: "Error: Account does not exist", error: err });
+ 		}
+ 	});
+ });
+
 
 // // User
 
