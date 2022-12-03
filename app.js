@@ -74,22 +74,24 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 // // BankAccount
 app.post("/v1/addBankAccount",  async (req, res) => {
 
-	const { AccountID, UserID, AccountType, AcccountBalance } = req.body;
+	var AccountID = Math.floor(Math.random() * 1000000000);
+
+	// const { AccountID, UserID, AccountType, AcccountBalance } = req.body;
 	
 	const newBankAccount = new bankAccount({
-		_id: AccountID,
-		AccountID,
-		UserID,
-		AccountType,
-		AcccountBalance
-		// token: token,
+		AccountID: AccountID,
+		UserID: req.body.UserID,
+		AccountType: req.body.AccountType,
+		AcccountBalance: req.body.AcccountBalance
 	});
+
+	console.log(newBankAccount);
 
 	newBankAccount.save((err, result) => {
 		if (err) {
 			res.status(400).send({ message: "Error: Bank Account already exists", error: err });
 		} else {
-			res.status(200).send({ message: "Bank Account created successfully", data: token });
+			res.status(200).send({ message: "Bank Account created successfully" });
 		}
 	});
 });
