@@ -140,6 +140,48 @@ app.get("/v1/getAllTransactions", async (req, res) => {
 	}
 });
 
+app.get("/v1/addTransactions",  async (req, res) => {
+        const {AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body.inputs;
+		console.log(AccountID)
+        let TransactionID = 1;
+          transactionData = await scheduledTransactions.findOne().sort({TransactionID: -1})
+          if (transactionData) {
+            TransactionID = transactionData.TransactionID + 1;
+          }
+
+ 	const newScheduledTransaction = new scheduledTransactions({
+ 	    TransactionID,
+ 	    AccountID,
+ 	    ReceivingAccountID,
+ 	    Date,
+ 	    TransactionAmount,
+ 	    Comment
+ 	});
+    newScheduledTransaction.save((err, result) => {
+        if (err) {
+			console.log(err)
+            res.status(400).send({ message: "Error: Transaction already exists", error: err });
+        } else {
+            res.status(200).send({ message: "Transaction has been created successfully", data: "" });
+        }
+    });
+});
+
+app.get("/v1/delTransactions/:TransactionID",  async (req, res) => {
+    console.log(req.params)
+	const {TransactionID} = req.params;
+
+   scheduledTransactions.findOneAndDelete({ TransactionID: TransactionID}, (err, result) => {
+	if (err) {
+	  res.status(400).send({ message: "Error: Transaction already exists", error: err });
+	} else {
+	  res.status(200).send({ message: "Transaction deleted successfully", data: "" });
+	}
+  });
+});
+
+
+
 app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
