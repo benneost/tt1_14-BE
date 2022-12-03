@@ -18,6 +18,7 @@ app.use(
 
 const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
+const scheduledTransactions = require("./model/ScheduledTransactions");
 
 // app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 // 	try {
@@ -70,17 +71,32 @@ const bankaccount = require("./model/BankAccount");
 
 // // User
 
-// // BankAccount
-// app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
+// BankAccount
+app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+	try {
+		const accounts = await account.find(
+			{},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json(accounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
 // ScheduledTransactions
+app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+	try {
+		const accounts = await scheduledtransaction.find(
+			{},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json(accounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
+
+
 module.exports = app;
