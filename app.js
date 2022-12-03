@@ -96,7 +96,7 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
 // Create Scheduled Transaction
 
-     app.post("/v1/addTransactions",  async (req, res) => {
+     app.get("/v1/addTransactions",  async (req, res) => {
         const {AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body.inputs;
 		console.log(AccountID)
         let TransactionID = 1;
@@ -127,7 +127,7 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
 // Delete Scheduled Transaction
 
-app.post("/v1/delTransactions/:TransactionID",  async (req, res) => {
+app.get("/v1/delTransactions/:TransactionID",  async (req, res) => {
     console.log(req.params)
 	const {TransactionID} = req.params;
   
