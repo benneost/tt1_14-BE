@@ -83,6 +83,31 @@ app.get("/v1/getAllUsers" , async (req, res) => {
 
 
 // BankAccounts
+// // BankAccount
+app.post("/v1/addBankAccount",  async (req, res) => {
+
+	var AccountID = Math.floor(Math.random() * 1000000000);
+
+	// const { AccountID, UserID, AccountType, AcccountBalance } = req.body;
+	
+	const newBankAccount = new bankAccount({
+		AccountID: AccountID,
+		UserID: req.body.UserID,
+		AccountType: req.body.AccountType,
+		AcccountBalance: req.body.AcccountBalance
+	});
+
+	console.log(newBankAccount);
+
+	newBankAccount.save((err, result) => {
+		if (err) {
+			res.status(400).send({ message: "Error: Bank Account already exists", error: err });
+		} else {
+			res.status(200).send({ message: "Bank Account created successfully" });
+		}
+	});
+});
+
 app.get("/v1/getAllBankAccounts" , async (req, res) => {
 	try {
 		const bankaccounts = await bankAccount.find();
