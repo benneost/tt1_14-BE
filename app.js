@@ -107,7 +107,16 @@ app.post("/v1/login" , async (req, res) => {
 				res.status(200).send({
 					data: {
 						token: "token",
-						// role: userData.role,
+						user: 
+							{
+								"UserID": userData.UserID,
+								"Username": userData.Username,
+								"Firstname": userData.Firstname,
+								"Lastname": userData.Lastname,
+								"Email": userData.Email,
+								"Address": userData.Address,
+								"OptIntoPhyStatements": userData.OptIntoPhyStatements
+							},
 						// token: user.token,
 					},
 					error: null,
