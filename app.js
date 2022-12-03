@@ -17,8 +17,8 @@ app.use(
 );
 
 const user = require("./model/User");
-const bankaccount = require("./model/BankAccount");
-const scheduledtranaction = require("./model/ScheduledTransactions");
+const bankAccount = require("./model/BankAccount");
+const scheduledTransactions = require("./model/ScheduledTransactions");
 
 // app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 // 	try {
@@ -32,12 +32,11 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 // 	}
 // });
 
-
 // app.post("/v1/addAccount",  async (req, res) => {
 // 	const { accountid, password, email, role } = req.body;
 // 	const hashedPassword = await bcrypt.hash(password, 10);
-	
-	
+
+
 
 // 	const newAccount = new account({
 // 		_id: accountid,
@@ -47,7 +46,7 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 // 		role,
 // 		token: token,
 // 	});
-	
+
 
 // 	newAccount.save((err, result) => {
 // 		if (err) {
@@ -60,7 +59,7 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 
 // app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
 // 	const { accountid } = req.body;
-	
+
 // 	account.findOneAndDelete({ _id: accountid }, (err, result) => {
 // 		if (result) {
 // 			res.status(200).send({ message: "Account deleted successfully" });
@@ -73,32 +72,25 @@ const scheduledtranaction = require("./model/ScheduledTransactions");
 // // User
 
 // // BankAccount
-// app.get("/v1/getBankAccount" , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
-
-
+app.get("/v1/getAllBankAccounts" , async (req, res) => {
+	try {
+		const bankaccounts = await bankAccount.find();
+		// console.log(bankaccounts);
+		res.status(200).json(bankaccounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
 
 // ScheduledTransactions
+app.get("/v1/getAllTransactions" , async (req, res) => {
+	try {
+		const transactions = await scheduledTransactions.find();
+		console.log(transactions);
+		res.status(200).json(transactions);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
 
-
- app.get("/v1/getBankAccount" , async (req, res) => {
- 	try {
- 		const accounts = await scheduledtranaction.find(
- 			{}
- 		);
- 		res.status(200).json(accounts);
- 	} catch (err) {
- 		res.status(400).send({ message: "Error has occurred", error: err });
- 	}
- });
-// ScheduledTransactions
 module.exports = app;
