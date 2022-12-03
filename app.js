@@ -20,15 +20,15 @@ const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
 const scheduledTransactions = require("./model/ScheduledTransactions");
 
-app.get("/v1/getUser" , async (req, res) => {
+app.get("/v1/getAllUser" , async (req, res) => {
 	try {
 		const userData = await user.find(
 			{},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
-		res.status(200).json(userData);
+		res.status(200).json({ data: userData, error: "Error has occurred" });
 	} catch (err) {
-		res.status(400).send({ message: "Error has occurred", error: err });
+		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
 });
 
@@ -54,9 +54,9 @@ app.post("/v1/addUser",  async (req, res) => {
 	
 	newAccount.save((err, result) => {
 		if (err) {
-			res.status(400).send({ message: "Error: Account already exists", error: err });
+			res.status(400).send({ data: null, error: "Error: Account already exists" });
 		} else {
-			res.status(200).send({ message: "Account created successfully", data: 'token' });
+			res.status(200).send({ data: 'token' , error: null});
 		}
 	});
 });
