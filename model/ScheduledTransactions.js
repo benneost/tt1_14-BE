@@ -5,7 +5,7 @@ const scheduledTransactionSchema = new mongoose.Schema({
     AccountID: Integer,
     ReceivingAccountID: Integer,
     Date: Date,
-    TransactionAmount: Decimal,
+    TransactionAmount: Number,
     Comment: String
 })
 
