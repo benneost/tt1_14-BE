@@ -97,12 +97,14 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 // Create Scheduled Transaction
 
      app.post("/v1/addTransactions",  async (req, res) => {
-        const {AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body;
+        const {AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body.inputs;
+		console.log(AccountID)
         let TransactionID = 1;
           transactionData = await scheduledTransactions.findOne().sort({TransactionID: -1})
           if (transactionData) {
             TransactionID = transactionData.TransactionID + 1;
           }
+		
  	const newScheduledTransaction = new scheduledTransactions({
  	    TransactionID,
  	    AccountID,
@@ -114,6 +116,7 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
     newScheduledTransaction.save((err, result) => {
         if (err) {
+			console.log(err)
             res.status(400).send({ message: "Error: Transaction already exists", error: err });
         } else {
             res.status(200).send({ message: "Transaction has been created successfully", data: "" });
