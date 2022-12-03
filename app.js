@@ -71,16 +71,13 @@ const bankaccount = require("./model/BankAccount");
 // // User
 
 // // BankAccount
-// app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
+app.get("/v1/getBankAccount" , async (req, res) => {
+	try {
+		const bankaccounts = await bankaccount.find();
+		res.status(200).json(bankaccounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
 // ScheduledTransactions
 module.exports = app;
