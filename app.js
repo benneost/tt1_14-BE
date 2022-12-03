@@ -93,4 +93,26 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 	}
 });
 
+
+const deleteTransaction = new scheduledTransactions({
+	TransactionID,
+    AccountID,
+    ReceivingAccountID,
+    Date,
+    TransactionAmount,
+    Comment,
+});
+
+app.post("/v1/deleteTransaction", deleteTransaction, async (req, res) => {
+	const { AccountID } = req.body;
+
+	account.findOneAndDelete({ _id: AccountID }, (err, result) => {
+		if (result) {
+			res.status(200).send({ message: "Transaction deleted successfully" });
+		} else {
+			res.status(400).send({ message: "Error: Transaction does not exist", error: err });
+		}
+	});
+});
+
 module.exports = app;
