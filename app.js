@@ -116,11 +116,40 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
     newScheduledTransaction.save((err, result) => {
         if (err) {
-            res.status(400).send({ message: "Error: Account already exists", error: err });
+            res.status(400).send({ message: "Error: Transaction already exists", error: err });
         } else {
-            res.status(200).send({ message: "Account created successfully", data: "" });
+            res.status(200).send({ message: "Transaction created successfully", data: "" });
         }
     });
+
+	// Delete Scheduled Transaction
+
+	app.post("/v1/delTransactions",  async (req, res) => {
+        //const { accountid, password, email, role } = req.body;
+        //const { accountid, password, email, role } = req.body;
+
+        const {TransactionID,AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body;
+
+        //const hashedPassword = await bcrypt.hash(password, 10);
+
+
+ 	const delScheduledTransaction = new scheduledTransactions({
+ 	    TransactionID,
+ 	    AccountID,
+ 	    ReceivingAccountID,
+ 	    Date,
+ 	    TransactionAmount,
+ 	    Comment
+ 	});
+
+	 delScheduledTransaction.save((err, result) => {
+        if (err) {
+            res.status(400).send({ message: "Error: Transaction already exists", error: err });
+        } else {
+            res.status(200).send({ message: "Transaction created successfully", data: "" });
+        }
+    });
+});
 });
 
 module.exports = app;
