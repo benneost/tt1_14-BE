@@ -26,7 +26,7 @@ app.get("/v1/getAllUser" , async (req, res) => {
 			{},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
-		res.status(200).json({ data: userData, error: "Error has occurred" });
+		res.status(200).json({ data: userData, error: "" });
 	} catch (err) {
 		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
@@ -38,7 +38,7 @@ app.post("/v1/getUserByUsername" , async (req, res) => {
 			{Username: req.body.Username},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
-		res.status(200).json({ data: userData, error: "Error has occurred" });
+		res.status(200).json({ data: userData, error: "" });
 	} catch (err) {
 		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
