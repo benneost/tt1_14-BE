@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const shelduleTransactionSchema = new mongoose.Schema({
+const scheduledTransactionSchema = new mongoose.Schema({
     TransactionID: String,
     AccountID: String,
     ReceivingAccountID: String,
