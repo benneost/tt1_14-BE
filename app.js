@@ -32,7 +32,7 @@ app.get("/v1/getAllUser" , async (req, res) => {
 	}
 });
 
-app.get("/v1/getUserByUsername" , async (req, res) => {
+app.post("/v1/getUserByUsername" , async (req, res) => {
 	try {
 		const userData = await user.find(
 			{Username: req.body.Username},
