@@ -116,6 +116,7 @@ app.post("/v1/login", async (req, res) => {
 				// 	"7Rs"
 				// );
 
+
 				res.status(200).send({
 					data: {
 						token: "token",
@@ -214,8 +215,19 @@ app.get("/v1/getBankAccountsByUserId/:id", async (req, res) => {
 });
 
 
+// // BankAccount
+app.get("/v1/getAllBankAccounts" , async (req, res) => {
+	try {
+		const bankaccounts = await bankAccount.find();
+		// console.log(bankaccounts);
+		res.status(200).json(bankaccounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
 // ScheduledTransactions
-app.get("/v1/getAllTransactions", async (req, res) => {
+app.get("/v1/getAllTransactions" , async (req, res) => {
 	try {
 		const transactions = await scheduledTransactions.find();
 		// console.log(transactions);
@@ -223,6 +235,53 @@ app.get("/v1/getAllTransactions", async (req, res) => {
 	} catch (err) {
 		res.status(400).send({ message: "Error has occurred", error: err });
 	}
+});
+
+
+// Create Scheduled Transaction
+
+     app.get("/v1/addTransactions",  async (req, res) => {
+        const {AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body.inputs;
+		console.log(AccountID)
+        let TransactionID = 1;
+          transactionData = await scheduledTransactions.findOne().sort({TransactionID: -1})
+          if (transactionData) {
+            TransactionID = transactionData.TransactionID + 1;
+          }
+		
+ 	const newScheduledTransaction = new scheduledTransactions({
+ 	    TransactionID,
+ 	    AccountID,
+ 	    ReceivingAccountID,
+ 	    Date,
+ 	    TransactionAmount,
+ 	    Comment
+ 	});
+
+    newScheduledTransaction.save((err, result) => {
+        if (err) {
+			console.log(err)
+            res.status(400).send({ message: "Error: Transaction already exists", error: err });
+        } else {
+            res.status(200).send({ message: "Transaction has been created successfully", data: "" });
+        }
+    });
+});
+
+
+// Delete Scheduled Transaction
+
+app.get("/v1/delTransactions/:TransactionID",  async (req, res) => {
+    console.log(req.params)
+	const {TransactionID} = req.params;
+  
+   scheduledTransactions.findOneAndDelete({ TransactionID: TransactionID}, (err, result) => {
+	if (err) {
+	  res.status(400).send({ message: "Error: Transaction already exists", error: err });
+	} else {
+	  res.status(200).send({ message: "Transaction deleted successfully", data: "" });
+	}
+  });
 });
 
 app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
