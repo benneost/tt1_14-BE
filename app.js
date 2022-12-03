@@ -32,6 +32,36 @@ app.get("/v1/getAllUser" , async (req, res) => {
 	}
 });
 
+app.get("/v1/getUserByUsername" , async (req, res) => {
+	try {
+		const userData = await user.find(
+			{Username: req.body.Username},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json({ data: userData, error: "Error has occurred" });
+	} catch (err) {
+		res.status(400).send({ data: null, error: "Error has occurred" });
+	}
+});
+
+app.post("/v1/editUser" , async (req, res) => {
+	try {
+		const userData = await user.findOne({ Username: req.body.Username });
+		if (userData) {
+			userData.Address = req.body.Address;
+			userData.Email = req.body.Email;
+			userData.save()
+			res.status(200).send({ data: null, error: "User editted!" });
+		}
+		else {
+			res.status(400).send({ data: null, error: "No User found" });
+		}
+		
+	} catch (err) {
+		res.status(400).send({ data: null, error: "Error has occurred" });
+	}
+});
+
 app.post("/v1/addUser",  async (req, res) => {
 	const { Username, Password, Firstname, Lastname, Email, Address, OptIntoPhyStatements } = req.body;
 	const hashedPassword = await bcrypt.hash(Password, 10);
@@ -89,7 +119,16 @@ app.post("/v1/login" , async (req, res) => {
 				res.status(200).send({
 					data: {
 						token: "token",
-						// role: userData.role,
+						user: 
+							{
+								"UserID": userData.UserID,
+								"Username": userData.Username,
+								"Firstname": userData.Firstname,
+								"Lastname": userData.Lastname,
+								"Email": userData.Email,
+								"Address": userData.Address,
+								"OptIntoPhyStatements": userData.OptIntoPhyStatements
+							},
 						// token: user.token,
 					},
 					error: null,
@@ -142,6 +181,5 @@ app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
 	}
 });
 
-ssss
 
 module.exports = app;
