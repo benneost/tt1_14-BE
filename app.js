@@ -18,6 +18,7 @@ app.use(
 
 const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
+const scheduledTransactions = require("./model/ScheduledTransactions");
 
 app.get("/v1/getAllUser" , async (req, res) => {
 	try {
@@ -127,5 +128,20 @@ app.post("/v1/login" , async (req, res) => {
 // 		res.status(400).send({ message: "Error has occurred", error: err });
 // 	}
 // });
+
 // ScheduledTransactions
+app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+	try {
+		const accounts = await scheduledTransactions.find(
+			{},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json(accounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
+ssss
+
 module.exports = app;
