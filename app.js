@@ -87,7 +87,7 @@ app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
 // ScheduledTransactions
 app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
 	try {
-		const accounts = await scheduledtransaction.find(
+		const accounts = await scheduledTransactions.find(
 			{},
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
