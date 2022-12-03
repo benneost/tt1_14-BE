@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const account = require("./model/account");
+const account = require("./model/User");
 
 app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 	try {
