@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const account = require("./model/account");
+const account = require("./model/User");
 
 app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 	try {
@@ -67,4 +67,19 @@ app.post("/v1/deleteAccount", authenticateToken, async (req, res) => {
 	});
 });
 
+// User
+
+// BankAccount
+app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
+	try {
+		const accounts = await account.find(
+			{},
+			{ _id: 0, __v: 0, password: 0, token: 0 }
+		);
+		res.status(200).json(accounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+// ScheduledTransactions
 module.exports = app;
