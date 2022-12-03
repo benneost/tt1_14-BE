@@ -23,3 +23,13 @@ Content-Type: application/json
     "Username": "PresidentDBS",
     "Password": "Multiplier3.5%"
 }
+
+###
+POST http://localhost:4001/v1/editUser
+Content-Type: application/json
+
+{
+    "Username": "PresidentDBS",
+    "Address": "Block 567 Marina Bay Sands #63-240",
+    "Email": "CherylChia@bestbank.com"
+}

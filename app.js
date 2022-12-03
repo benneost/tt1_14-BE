@@ -32,6 +32,24 @@ app.get("/v1/getAllUser" , async (req, res) => {
 	}
 });
 
+app.post("/v1/editUser" , async (req, res) => {
+	try {
+		const userData = await user.findOne({ Username: req.body.Username });
+		if (userData) {
+			userData.Address = req.body.Address;
+			userData.Email = req.body.Email;
+			userData.save()
+			res.status(200).send({ data: null, error: "User editted!" });
+		}
+		else {
+			res.status(400).send({ data: null, error: "No User found" });
+		}
+		
+	} catch (err) {
+		res.status(400).send({ data: null, error: "Error has occurred" });
+	}
+});
+
 app.post("/v1/addUser",  async (req, res) => {
 	const { Username, Password, Firstname, Lastname, Email, Address, OptIntoPhyStatements } = req.body;
 	const hashedPassword = await bcrypt.hash(Password, 10);
@@ -142,6 +160,5 @@ app.get("/v1/getBankAccount", authenticateToken , async (req, res) => {
 	}
 });
 
-ssss
 
 module.exports = app;
