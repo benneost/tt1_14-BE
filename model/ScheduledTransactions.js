@@ -9,4 +9,4 @@ const scheduledTransactionSchema = new mongoose.Schema({
     Comment: String
 })
 
-module.exports = mongoose.model('shelduletransaction', shelduleTransactionSchema);
+module.exports = mongoose.model('ScheduledTransactions', scheduledTransactionSchema);
