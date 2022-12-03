@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const users = require("./model/User");
+const user = require("./model/User");
 const bankAccount = require("./model/BankAccount");
 const scheduledTransactions = require("./model/ScheduledTransactions");
 
@@ -180,7 +180,7 @@ app.post("/v1/addBankAccount", async (req, res) => {
 		AcccountBalance: req.body.AcccountBalance
 	});
 
-	console.log(newBankAccount);
+	// console.log(newBankAccount);
 
 	newBankAccount.save((err, result) => {
 		if (err) {
@@ -226,7 +226,7 @@ app.get("/v1/getAllTransactions", async (req, res) => {
 app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
-		console.log(bankaccounts);
+		// console.log(bankaccounts);
 		const result = []
 
 
@@ -236,7 +236,7 @@ app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 			temp.Transactions = transactions;
 			result.push(temp);
 		}
-		console.log(result);
+		// console.log(result);
 		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).send({ message: "Error has occurred", error: err });
