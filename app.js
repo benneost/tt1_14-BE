@@ -91,12 +91,12 @@ app.post("/v1/addUser",  async (req, res) => {
 	});
 });
 
-app.post("/v1/login" , async (req, res) => {
+app.post("/v1/login", async (req, res) => {
 	const userData = await user.findOne({ Username: req.body.Username });
 	// if no user found
 	
 	if (!userData) {
-		res.status(401).send({ message: "User not found" });
+		res.status(400).send({data:null, error: "User not found" });
 		// if user is admin
 	} else {
 		try {
@@ -106,7 +106,7 @@ app.post("/v1/login" , async (req, res) => {
 			);
 			console.log( isPasswordValid)
 			if (!isPasswordValid) {
-				res.status(401).send({ message: "Invalid password" });
+				res.status(400).send({data:null,  error: "Invalid password" });
 			} else {
 				// user.token = jwt.sign(
 				// 	{
@@ -135,7 +135,7 @@ app.post("/v1/login" , async (req, res) => {
 				});
 			}
 		} catch (error) {
-			res.status(500).send({ message: "Error: Error Logging in", error: error });
+			res.status(500).send({ data: null , error: "Error Logging in" });
 		}
 	}
 });
