@@ -16,7 +16,7 @@ app.use(
 	})
 );
 
-const user = require("./model/User");
+const users = require("./model/User");
 const bankAccount = require("./model/BankAccount");
 const scheduledTransactions = require("./model/ScheduledTransactions");
 
@@ -69,9 +69,20 @@ const scheduledTransactions = require("./model/ScheduledTransactions");
 // 	});
 // });
 
-// // User
 
-// // BankAccount
+// Users
+app.get("/v1/getAllUsers" , async (req, res) => {
+	try {
+		const user = await users.find();
+		// console.log(user);
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
+
+// BankAccounts
 app.get("/v1/getAllBankAccounts" , async (req, res) => {
 	try {
 		const bankaccounts = await bankAccount.find();
@@ -81,6 +92,17 @@ app.get("/v1/getAllBankAccounts" , async (req, res) => {
 		res.status(400).send({ message: "Error has occurred", error: err });
 	}
 });
+
+
+app.get("/v1/getBankAccountsByUserId/:id" , async (req, res) => {
+	try {
+		const bankaccounts = await getBankAccountByUserId(req.params.id);
+		res.status(200).json(bankaccounts);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
 
 // ScheduledTransactions
 app.get("/v1/getAllTransactions" , async (req, res) => {
@@ -92,5 +114,14 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 		res.status(400).send({ message: "Error has occurred", error: err });
 	}
 });
+
+async function getBankAccountsByUserId(userId){
+	try {
+		// console.log(userId);
+		return await bankAccount.find({"UserID":`${userId}`});
+	} catch (err) {
+		throw new Exception({ message: "Error has occurred", error: err });
+	}
+}
 
 module.exports = app;
