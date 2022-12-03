@@ -1,0 +1,22 @@
+###
+GET http://localhost:4001/v1/getAccounts
+Content-Type: application/json
+
+###
+POST http://localhost:4001/v1/addAccount
+Content-Type: application/json
+
+{
+    "accountid" : "admin456",
+    "password" : "password",
+    "email": "admin@gmail.com",
+    "role": "admin"
+}
+
+###
+POST http://localhost:4001/v1/deleteAccount
+Content-Type: application/json
+
+{
+    "accountid" : "admin123"
+}
