@@ -93,4 +93,34 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 	}
 });
 
+
+// Create Scheduled Transaction
+
+     app.post("/v1/addTransactions",  async (req, res) => {
+        //const { accountid, password, email, role } = req.body;
+        //const { accountid, password, email, role } = req.body;
+
+        const {TransactionID,AccountID,ReceivingAccountID,Date,TransactionAmount,Comment} = req.body;
+
+        //const hashedPassword = await bcrypt.hash(password, 10);
+
+
+ 	const newScheduledTransaction = new scheduledTransactions({
+ 	    TransactionID,
+ 	    AccountID,
+ 	    ReceivingAccountID,
+ 	    Date,
+ 	    TransactionAmount,
+ 	    Comment
+ 	});
+
+    newScheduledTransaction.save((err, result) => {
+        if (err) {
+            res.status(400).send({ message: "Error: Account already exists", error: err });
+        } else {
+            res.status(200).send({ message: "Account created successfully", data: "" });
+        }
+    });
+});
+
 module.exports = app;
