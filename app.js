@@ -121,7 +121,7 @@ app.get("/v1/getAllBankAccounts" , async (req, res) => {
 
 app.get("/v1/getBankAccountsByUserId/:id" , async (req, res) => {
 	try {
-		const bankaccounts = await getBankAccountByUserId(req.params.id);
+		const bankaccounts = await getBankAccountsByUserId(req.params.id);
 		res.status(200).json(bankaccounts);
 	} catch (err) {
 		res.status(400).send({ message: "Error has occurred", error: err });
@@ -148,5 +148,7 @@ async function getBankAccountsByUserId(userId){
 		throw new Exception({ message: "Error has occurred", error: err });
 	}
 }
+
+
 
 module.exports = app;
