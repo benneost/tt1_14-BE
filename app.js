@@ -140,6 +140,17 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 	}
 });
 
+app.get("/v1/getTransactionsByUserId/:id" , async (req, res) => {
+	try {
+
+		const transactions = await scheduledTransactions.find({AccountID: req.params.id, ReceivingAccountID: req.params.id});
+		// console.log(transactions);
+		res.status(200).json(transactions);
+	} catch (err) {
+		res.status(400).send({ message: "Error has occurred", error: err });
+	}
+});
+
 async function getBankAccountsByUserId(userId){
 	try {
 		// console.log(userId);
