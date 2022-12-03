@@ -18,7 +18,7 @@ app.use(
 
 const user = require("./model/User");
 const bankaccount = require("./model/BankAccount");
-const scheduledtranaction = require("./model/ScheduledTransaction");
+const scheduledtranaction = require("./model/ScheduledTransactions");
 
 // app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
 // 	try {
@@ -32,19 +32,6 @@ const scheduledtranaction = require("./model/ScheduledTransaction");
 // 	}
 // });
 
-
-// Testing Transaction Create
-// app.get("/v1/getAccounts", authenticateToken , async (req, res) => {
-// 	try {
-// 		const accounts = await account.find(
-// 			{},
-// 			{ _id: 0, __v: 0, password: 0, token: 0 }
-// 		);
-// 		res.status(200).json(accounts);
-// 	} catch (err) {
-// 		res.status(400).send({ message: "Error has occurred", error: err });
-// 	}
-// });
 
 // app.post("/v1/addAccount",  async (req, res) => {
 // 	const { accountid, password, email, role } = req.body;
@@ -97,6 +84,9 @@ const scheduledtranaction = require("./model/ScheduledTransaction");
 // 		res.status(400).send({ message: "Error has occurred", error: err });
 // 	}
 // });
+
+
+
 // ScheduledTransactions
 
 
