@@ -142,10 +142,16 @@ app.get("/v1/getAllTransactions" , async (req, res) => {
 
 app.get("/v1/getTransactionsByUserId/:id" , async (req, res) => {
 	try {
+		const bankaccounts = await getBankAccountsByUserId(req.params.id);
+		console.log(bankaccounts);
+		const result = []
 
-		const transactions = await scheduledTransactions.find({AccountID: req.params.id, ReceivingAccountID: req.params.id});
-		// console.log(transactions);
-		res.status(200).json(transactions);
+		for (let i = 0; i < bankaccounts.length; i++) {
+			const transactions = await getTransactionsByAccountId(bankaccounts[i].AccountID);
+			result.push(transactions);
+		}
+		console.log(result);
+		res.status(200).json(result);
 	} catch (err) {
 		res.status(400).send({ message: "Error has occurred", error: err });
 	}
@@ -155,6 +161,15 @@ async function getBankAccountsByUserId(userId){
 	try {
 		// console.log(userId);
 		return await bankAccount.find({"UserID":`${userId}`});
+	} catch (err) {
+		throw new Exception({ message: "Error has occurred", error: err });
+	}
+}
+
+async function getTransactionsByAccountId(accountId){
+	try {
+		// console.log(accountId);
+		return await scheduledTransactions.find({ $or: [ { AccountID: accountId }, { ReceivingAccountID: accountId } ] });
 	} catch (err) {
 		throw new Exception({ message: "Error has occurred", error: err });
 	}
