@@ -1,0 +1,101 @@
+FirstName,LastName,Address,MonthlyIncome,AmountInStocks,AmountInBonds,HasRelationshipManager
+David,Langdon,Block 475 Bedok North #84-6612 Singapore 475226,5093,High,Low,Yes
+Bella,Chapman,Block 925 Cactus Dr #76-742 Singapore 925424,6918,High,Low,Yes
+Connor,Ogden,Block 617 Temasek Boulevard #13-5833 Singapore 617455,8346,,,Yes
+Adam,Springer,Block 904 Gul Drive #63-8429 Singapore 904977,8961,High,Low,No
+Kimberly,Wilkins,Block 698 Colombo Court #42-8430 Singapore 698965,7294,High,Low,Yes
+Adam,Morrison,Block 340 South Bridge Road #99-8314 Singapore 340734,6967,High,Low,Yes
+Sue,Avery,Block 659 Yishun Street #42-4039 Singapore 659613,5022,Low,High,Yes
+Alexandra,Parsons,Block 609 Ubi Road #41-5334 Singapore 609649,8347,High,Low,
+Colin,Jones,Block 105 Ang Mo Kio #47-143 Singapore 105362,9261,High,Low,Yes
+Carolyn,Kelly,Block 883 Kallang Place #37-164 Singapore 883301,2652,Low,High,No
+Sonia,Morgan,Block 799 Mountbatten Road #22-5831 Singapore 799481,4479,,,Yes
+Adam,Clarkson,Block 466 Serangoon North #11-5076 Singapore 466401,1140,Low,High,Yes
+Amelia,Ross,Block 663 Battery Road #52-1777 Singapore 663115,6044,High,Low,Yes
+Edward,McDonald,Block 170 Tampines Street #10-3548 Singapore 170351,1963,Low,High,No
+Alison,Scott,Block 538 Lock Road #92-3023 Singapore 538423,3422,High,Low,No
+Adrian,Nash,Block 727 Bencoolen Street #26-1728 Singapore 727741,7326,High,Low,Yes
+Simon,Hemmings,Block 605 Woodlands Loop #40-7322 Singapore 605960,7968,High,Low,
+Brandon,Dowd,Block 244 Science Park Drive #60-6643 Singapore 244239,6983,High,Low,Yes
+Katherine,Paterson,Block 738 Far East Plaza #11-3835 Singapore 738802,6604,,,Yes
+Trevor,Jackson,Block 287 Newton Road #46-6019 Singapore 287250,1173,Low,High,No
+James,Black,Block 812 Petain Road #59-6597 Singapore 812292,6352,High,Low,Yes
+Sonia,Lee,Block 212 Tyrwhitt Road #56-3174 Singapore 212290,3373,Low,High,No
+Amelia,Hudson,Block 958 Bukit Batok Street #16-2977 Singapore 958506,1047,Low,High,No
+Stephen,Cameron,Block 339 Clementi Street #65-3712 Singapore 339343,2517,High,Low,No
+Ian,Hart,Block 353 Kallang Pudding Road #64-144 Singapore 353551,3510,Low,High,No
+Faith,Dickens,Block 534 Serangoon Road #13-3267 Singapore 534408,1094,Low,High,Yes
+Joe,Young,Block 657 Bedok South #18-5689 Singapore 657229,6147,High,Low,Yes
+Julian,Davidson,Block 686 Serangoon South #8-2871 Singapore 686958,7274,,,Yes
+Harry,Rutherford,Block 220 Bishan Street #58-1779 Singapore 220777,4946,Low,High,Yes
+Trevor,Blake,Block 444 Orchard Road #17-7034 Singapore 444286,7019,High,Low,Yes
+Phil,Morgan,Block 189 Marine Parade Road #66-9818 Singapore 189335,5050,High,Low,No
+Carolyn,Lewis,Block 754 Defu Lane #45-9772 Singapore 754540,9498,Low,High,Yes
+Oliver,Miller,Block 705 Anson Road #68-6108 Singapore 705484,7589,High,Low,Yes
+Jane,Anderson,Block 185 French Road #57-1100 Singapore 185359,4408,Low,High,Yes
+Alexandra,Miller,Block 696 Raffles Place Street #12-4543 Singapore 696948,5230,High,Low,
+Lucas,Ince,Block 874 Chai Chee Road #24-1220 Singapore 874846,5114,High,Low,Yes
+William,Pullman,Block 882 Killiney Road #82-4118 Singapore 882787,1416,Low,High,No
+Amanda,Rampling,Block 829 Newton Drive #47-1992 Singapore 829216,2934,,,No
+Simon,Buckland,Block 486 Yishun North #73-1967 Singapore 486863,3532,Low,High,No
+Jessica,Arnold,Block 834 Woodlands South #99-897 Singapore 834783,6365,High,Low,Yes
+Blake,Skinner,Block 250 Marina Bay Road #73-8651 Singapore 250207,7182,High,Low,Yes
+Wanda,Paige,Block 310 Tuas Link #96-6697 Singapore 310828,5218,Low,High,Yes
+Blake,Wright,Block 597 Jurong East #31-1579 Singapore 597538,5302,High,Low,Yes
+Peter,Parsons,Block 322 Jurong West #15-8478 Singapore 322266,9942,High,Low,No
+Jennifer,Young,Block 775 Bukit Gombak #79-5177 Singapore 775933,7704,Low,High,Yes
+Anthony,Wilkins,Block 668 Marsiling Road #40-9091 Singapore 668839,9442,High,Low,Yes
+Jason,Paterson,Block 158 Yew Tee Street #61-7111 Singapore 158390,9379,High,Low,Yes
+Natalie,Mills,Block 479 Kranji South #6-2228 Singapore 479842,9895,High,Low,Yes
+Joseph,Walsh,Block 294 Caldecott Street #87-1181 Singapore 294665,2878,Low,High,No
+Penelope,Anderson,Block 264 Sin Ming Road #85-8268 Singapore 264929,1179,,,No
+Sonia,Ogden,Block 653 Robinson Road #75-9374 Singapore 653153,4296,Low,High,Yes
+Penelope,Walker,Block 273 Chander Road #95-4497 Singapore 273209,7221,High,Low,Yes
+Jennifer,MacLeod,Block 506 Eu Tong Sen Street #33-5603 Singapore 506900,4266,Low,High,
+Anna,Turner,Block 826 Orchard Street #65-8096 Singapore 826342,3218,Low,High,No
+Joshua,Skinner,Block 860 King Albert Park #86-8709 Singapore 860597,1996,Low,High,No
+Ryan,Arnold,Block 634 Kallang Street #7-2600 Singapore 634264,6239,High,Low,Yes
+Colin,Greene,Block 424 Kaki Bukit North #49-3415 Singapore 424340,2308,Low,High,No
+Jan,Howard,Block 940 Tampines East #84-8052 Singapore 940213,7822,High,Low,Yes
+Wanda,Mackay,Block 515 Tiong Bahru Street #44-6990 Singapore 515254,2728,,,No
+Alexandra,Skinner,Block 749 Redhill South #5-9713 Singapore 749732,1215,Low,High,No
+Natalie,Metcalfe,Block 219 Rochor Street #42-4221 Singapore 219786,9380,High,Low,Yes
+Phil,Slater,Block 753 Dover East #55-5191 Singapore 753284,4761,Low,High,Yes
+Jake,Gill,Block 354 Lentor Street #32-8198 Singapore 354222,1697,High,Low,No
+Deirdre,Piper,Block 333 Nicoll Highway North #21-9829 Singapore 333457,2874,Low,High,
+Connor,Kerr,Block 911 Admiralty West #86-4599 Singapore 911942,9156,High,Low,Yes
+William,Terry,Block 430 Toa Payoh East #85-7768 Singapore 430497,5969,High,Low,Yes
+Gavin,Jones,Block 518 Bugis Street #55-2771 Singapore 518588,7231,High,Low,Yes
+Dorothy,Hemmings,Block 613 Telok Ayer Street #20-9055 Singapore 613315,492,Low,High,No
+Grace,Fraser,Block 366 Shaw Centre #49-4726 Singapore 366747,3993,,,No
+Sally,Piper,Block 337 Clementi West #48-2258 Singapore 337937,8122,High,Low,Yes
+Jennifer,Johnston,Block 206 North Bridge Road #60-2176 Singapore 206328,3118,Low,High,No
+Deirdre,Arnold,Block 647 Shenton Way #96-2680 Singapore 647511,6256,High,Low,Yes
+Sonia,Hunter,Block 231 Tiong Poh Road #1-2282 Singapore 231980,6699,High,Low,Yes
+Elizabeth,Cameron,Block 330 Eunos Street #10-2637 Singapore 330122,2093,Low,High,No
+Joshua,Powell,Block 539 Sophia Road #3-846 Singapore 539903,9619,High,Low,Yes
+Steven,Chapman,Block 660 Haig Road #3-3432 Singapore 660892,8520,Low,High,Yes
+Penelope,Abraham,Block 732 Toa Payoh Industrial Park #30-6846 Singapore 732346,5891,High,Low,Yes
+Joe,Miller,Block 708 Leng Kee Road #88-6215 Singapore 708602,3349,Low,High,No
+Connor,Stewart,Block 791 Queen Street #39-7903 Singapore 791437,9728,High,Low,Yes
+Matt,Taylor,Block 870 West Coast Road #32-5777 Singapore 870607,5306,High,Low,No
+Austin,Hardacre,Block 729 Scotts Road #51-3524 Singapore 729681,4963,High,Low,Yes
+Isaac,McDonald,Block 134 Pandan Street #72-9079 Singapore 134354,7713,High,Low,Yes
+Caroline,Payne,Block 417 Havelock Road #2-5168 Singapore 417604,1508,Low,High,No
+Jason,Dyer,Block 458 Ubi Crescent #48-7392 Singapore 458995,1677,Low,High,No
+Karen,Avery,Block 861 High Street Centre #41-531 Singapore 861925,6439,,,Yes
+Bernadette,Clark,Block 296 Stanford Road #84-8615 Singapore 296174,2353,Low,High,No
+Emma,Walsh,Block 602 Hougang Street #38-1502 Singapore 602556,4423,Low,High,Yes
+Diana,Davidson,Block 360 Punggol West #99-3789 Singapore 360545,9140,High,Low,Yes
+Dylan,Welch,Block 143 Ceylon Road #25-3449 Singapore 143850,6830,High,Low,Yes
+Fiona,Allan,Block 667 Tuas Bay South #60-1586 Singapore 667410,559,Low,High,No
+Leah,Ball,Block 209 Balestier Road #80-7112 Singapore 209196,1122,Low,High,No
+Dorothy,Greene,Block 301 Bukit Timah Road #13-2888 Singapore 301808,8145,,,Yes
+Joan,Watson,Block 188 River Valley Road #59-2450 Singapore 188593,3351,Low,High,Yes
+Richard,Grant,Block 954 Whampoa Drive #13-6039 Singapore 954364,1388,Low,High,No
+Max,Cornish,Block 319 Parkway Parade Street #7-5440 Singapore 319587,3678,Low,High,No
+Carl,Hudson,Block 490 May Road #64-3411 Singapore 490417,8079,High,Low,No
+Katherine,Burgess,Block 312 Tagore Drive #84-5136 Singapore 312112,7687,High,Low,Yes
+Jack,Dowd,Block 764 Cecil Street #97-3752 Singapore 764830,2125,High,Low,No
+Carolyn,Mackay,Block 382 Middle Road #42-4807 Singapore 382809,9806,High,Low,Yes
+Ruth,James,Block 907 Kaki Bukit Place #75-5920 Singapore 907419,5492,High,Low,Yes
