@@ -20,7 +20,7 @@ const user = require("./model/User");
 const bankAccount = require("./model/BankAccount");
 const scheduledTransactions = require("./model/ScheduledTransactions");
 
-app.get("/v1/getAllUser" , async (req, res) => {
+app.get("/v1/getAllUser", authenticateToken, async (req, res) => {
 	try {
 		const userData = await user.find(
 			{},
@@ -32,10 +32,10 @@ app.get("/v1/getAllUser" , async (req, res) => {
 	}
 });
 
-app.post("/v1/getUserByUsername" , async (req, res) => {
+app.post("/v1/getUserByUsername", authenticateToken, async (req, res) => {
 	try {
 		const userData = await user.find(
-			{Username: req.body.Username},
+			{ Username: req.body.Username },
 			{ _id: 0, __v: 0, password: 0, token: 0 }
 		);
 		res.status(200).json({ data: userData, error: "" });
@@ -44,49 +44,72 @@ app.post("/v1/getUserByUsername" , async (req, res) => {
 	}
 });
 
-app.post("/v1/editUser" , async (req, res) => {
+app.post("/v1/editUser", authenticateToken, async (req, res) => {
 	try {
 		const userData = await user.findOne({ Username: req.body.Username });
 		if (userData) {
 			userData.Address = req.body.Address;
 			userData.Email = req.body.Email;
 			userData.save()
-			res.status(200).send({ data: null, error: "User editted!" });
+			res.status(200).send({ data: "User editted!", error: "" });
 		}
 		else {
 			res.status(400).send({ data: null, error: "No User found" });
 		}
-		
+
 	} catch (err) {
 		res.status(400).send({ data: null, error: "Error has occurred" });
 	}
 });
 
-app.post("/v1/addUser",  async (req, res) => {
+app.post("/v1/addUser", async (req, res) => {
 	const { Username, Password, Firstname, Lastname, Email, Address, OptIntoPhyStatements } = req.body;
 	const hashedPassword = await bcrypt.hash(Password, 10);
 	let Userid = 1;
-	userData = await user.findOne().sort({UserID: -1})
+	userData = await user.findOne().sort({ UserID: -1 })
 	if (userData) {
 		Userid = userData.UserID + 1;
 	}
-	
+
 	const newAccount = new user({
 		UserID: Userid,
 		Username,
-		Password : hashedPassword,
+		Password: hashedPassword,
 		Firstname,
 		Lastname,
 		Email,
 		Address,
 		OptIntoPhyStatements
 	});
-	
+
+	token = jwt.sign(
+		{
+			exp: Math.floor(Date.now() / 1000) + 60 * 5,
+			userid: userData.Username,
+		},
+		"DBSSeed"
+	);
+
 	newAccount.save((err, result) => {
 		if (err) {
 			res.status(400).send({ data: null, error: "Error: Account already exists" });
 		} else {
-			res.status(200).send({ data: 'token' , error: null});
+			res.status(200).send({
+				data: {
+					token: token,
+					user:
+					{
+						"UserID": userData.UserID,
+						"Username": userData.Username,
+						"Firstname": userData.Firstname,
+						"Lastname": userData.Lastname,
+						"Email": userData.Email,
+						"Address": userData.Address,
+						"OptIntoPhyStatements": userData.OptIntoPhyStatements
+					},
+					// token: user.token,
+				}, error: null
+			});
 		}
 	});
 });
@@ -94,70 +117,70 @@ app.post("/v1/addUser",  async (req, res) => {
 app.post("/v1/login", async (req, res) => {
 	const userData = await user.findOne({ Username: req.body.Username });
 	// if no user found
-	
+
 	if (!userData) {
-		res.status(400).send({data:null, error: "User not found" });
-		// if user is admin
+		res.status(400).send({ data: null, error: "User not found" });
+		// if user is 
 	} else {
 		try {
 			const isPasswordValid = await bcrypt.compare(
 				req.body.Password,
 				userData.Password
 			);
-			console.log( isPasswordValid)
+			console.log(isPasswordValid)
 			if (!isPasswordValid) {
-				res.status(400).send({data:null,  error: "Invalid password" });
+				res.status(400).send({ data: null, error: "Invalid password" });
 			} else {
-				// user.token = jwt.sign(
-				// 	{
-				// 		exp: Math.floor(Date.now() / 1000) + 60 * 60 * 2,
-				// 		userid: req.body.userid,
-				// 	},
-				// 	"7Rs"
-				// );
+				token = jwt.sign(
+					{
+						exp: Math.floor(Date.now() / 1000) + 60 * 5,
+						userid: userData.Username,
+					},
+					"DBSSeed"
+				);
 
 				res.status(200).send({
 					data: {
-						token: "token",
-						user: 
-							{
-								"UserID": userData.UserID,
-								"Username": userData.Username,
-								"Firstname": userData.Firstname,
-								"Lastname": userData.Lastname,
-								"Email": userData.Email,
-								"Address": userData.Address,
-								"OptIntoPhyStatements": userData.OptIntoPhyStatements
-							},
+						token: token,
+						user:
+						{
+							"UserID": userData.UserID,
+							"Username": userData.Username,
+							"Firstname": userData.Firstname,
+							"Lastname": userData.Lastname,
+							"Email": userData.Email,
+							"Address": userData.Address,
+							"OptIntoPhyStatements": userData.OptIntoPhyStatements
+						},
 						// token: user.token,
 					},
 					error: null,
 				});
 			}
 		} catch (error) {
-			res.status(500).send({ data: null , error: "Error Logging in" });
+			res.status(500).send({ data: null, error: "Error Logging in" });
 		}
 	}
 });
 
 
- app.post("/v1/deleteAccount/:UserID", async (req, res) => {
-    console.log(req.params)
- 	const { UserID } = req.params;
-	
- 	user.findOneAndDelete({ UserID: UserID}, (err, result) => {
- 		if (result) {
- 			res.status(200).send({ message: "Account deleted successfully" });
- 		} else {
- 			res.status(400).send({ message: "Error: Account does not exist", error: err });
- 		}
- 	});
- });
+app.post("/v1/deleteAccount/:UserID", authenticateToken, async (req, res) => {
+	console.log(req.params)
+	const { UserID } = req.params;
+
+	user.findOneAndDelete({ UserID: UserID }, (err, result) => {
+		if (result) {
+			res.status(200).send({ message: "Account deleted successfully" });
+		} else {
+			res.status(400).send({ message: "Error: Account does not exist", error: err });
+		}
+	});
+});
 
 
 
 // Users
-app.get("/v1/getAllUsers", async (req, res) => {
+app.get("/v1/getAllUsers", authenticateToken, async (req, res) => {
 	try {
 		const user = await users.find();
 		// console.log(user);
@@ -169,7 +192,7 @@ app.get("/v1/getAllUsers", async (req, res) => {
 
 
 // BankAccounts
-app.post("/v1/addBankAccount", async (req, res) => {
+app.post("/v1/addBankAccount", authenticateToken, async (req, res) => {
 
 	var AccountID = Math.floor(Math.random() * 1000000000);
 
@@ -193,7 +216,7 @@ app.post("/v1/addBankAccount", async (req, res) => {
 	});
 });
 
-app.get("/v1/getAllBankAccounts", async (req, res) => {
+app.get("/v1/getAllBankAccounts", authenticateToken, async (req, res) => {
 	try {
 		const bankaccounts = await bankAccount.find();
 		// console.log(bankaccounts);
@@ -204,7 +227,7 @@ app.get("/v1/getAllBankAccounts", async (req, res) => {
 });
 
 
-app.get("/v1/getBankAccountsByUserId/:id", async (req, res) => {
+app.get("/v1/getBankAccountsByUserId/:id", authenticateToken, async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
 		res.status(200).json(bankaccounts);
@@ -215,7 +238,7 @@ app.get("/v1/getBankAccountsByUserId/:id", async (req, res) => {
 
 
 // ScheduledTransactions
-app.get("/v1/getAllTransactions", async (req, res) => {
+app.get("/v1/getAllTransactions", authenticateToken, async (req, res) => {
 	try {
 		const transactions = await scheduledTransactions.find();
 		// console.log(transactions);
@@ -225,7 +248,7 @@ app.get("/v1/getAllTransactions", async (req, res) => {
 	}
 });
 
-app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
+app.get("/v1/getTransactionsByUserId/:id", authenticateToken, async (req, res) => {
 	try {
 		const bankaccounts = await getBankAccountsByUserId(req.params.id);
 		// console.log(bankaccounts);
@@ -245,7 +268,7 @@ app.get("/v1/getTransactionsByUserId/:id", async (req, res) => {
 	}
 });
 
-app.get("/v1/getTransactionsByAccountId/:id", async (req, res) => {
+app.get("/v1/getTransactionsByAccountId/:id", authenticateToken, async (req, res) => {
 	try {
 		const transactions = await getTransactionsByAccountId(req.params.id);
 		res.status(200).json(transactions);
